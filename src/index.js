@@ -1,6 +1,9 @@
+
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
+import * as bootstrap from 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { configureStore } from '@reduxjs/toolkit'
@@ -8,11 +11,13 @@ import { Provider } from "react-redux";
 
 import productReducer from "./features/products"
 import dbproductReducer from "./features/databaseProducts"
+import adminReducer from "./features/admin"
 
 const store = configureStore({
   reducer: {
     products: productReducer,
-    dbproducts: dbproductReducer
+    dbproducts: dbproductReducer,
+    admin: adminReducer
   },
 });
 

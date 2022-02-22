@@ -1,6 +1,6 @@
  
 function displayProducts(){
-    const baseUrl = 
+    //const baseUrl = 
     const allProducts = fetch("https://bodega-backend-api.herokuapp.com/products")
     .then((response) => {
         return response.json();
