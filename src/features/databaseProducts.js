@@ -80,6 +80,7 @@ export const dbproductSlice = createSlice({
     [getProducts.rejected]: (state) => {
       state.isLoading = false;
     },
+    
     // delete logic
     [deleteProducts.pending]: (state) => {
       state.isLoading = true;

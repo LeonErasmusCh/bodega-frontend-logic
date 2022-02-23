@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fakeProducts } from "./fakadata";
+import { fakeProducts } from "./fakeData";
 
 
 export const productSlice = createSlice({

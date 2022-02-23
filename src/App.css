@@ -34,3 +34,8 @@ body{
   margin: 0 auto;
 }
 
+.form-label{
+  color: #697479;
+  font-size: 13px;
+  margin-bottom: 0;
+}

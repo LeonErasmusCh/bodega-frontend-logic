@@ -8,8 +8,7 @@ import {
   getProducts,
   deleteProducts,
   addProducts,
-  updateProducts,
-  getAdmin,
+  updateProducts
 } from "./features/databaseProducts";
 
 function App() {
@@ -17,27 +16,27 @@ function App() {
   const products = useSelector((state) => state.dbproducts.products);
   const user = useSelector((state) => state.admin.admin);
 
+  // loading
+
   //user?
   const [loggedin, setLoggedin] = useState(true);
-  const [loggedUser, setLoggedUser] = useState(user);
+  //const [loggedUser, setLoggedUser] = useState(user);
 
-  console.log(user);
-
+  // load each product
   const [productName, setProductName] = useState("");
   const [category, setCategory] = useState("");
   const [qty, setQty] = useState("");
   const [description, setDesciption] = useState("");
 
-
   //Update
-  const [newCategory, setNewCategory] = useState(category);
-  const [newQty, setNewQty] = useState(qty);
-  const [newDescription, setNewDescription] = useState(description);
-  const [newProductName, setNewProductName] = useState(productName);
+  const [newCategory, setNewCategory] = useState("");
+  const [newQty, setNewQty] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [newProductName, setNewProductName] = useState("");
 
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch, products]);
+  }, [dispatch]);
 
 
 
@@ -48,10 +47,11 @@ function App() {
       ) : (
         <div className="container">
           <h1 className="p-3 text-secondary">Bodega</h1>
-          <div class="row p-4">
-            <div class="col-2">
+          <div className="row p-4">
+            <div className="col-2">
+              {/* Top input area */}
               <input
-                class="form-control"
+                className="form-control"
                 type="text"
                 placeholder="producto"
                 value={productName}
@@ -60,9 +60,9 @@ function App() {
                 }}
               ></input>
             </div>
-            <div class="col-2">
+            <div className="col-2">
               <input
-                class="form-control"
+                className="form-control"
                 type="text"
                 placeholder="categoria"
                 value={category}
@@ -71,10 +71,10 @@ function App() {
                 }}
               ></input>
             </div>
-            <div class="col-4">
+            <div className="col-4">
               <textarea
                 rows="1"
-                class="form-control"
+                className="form-control"
                 type="text"
                 placeholder="descipcion"
                 value={description}
@@ -83,9 +83,9 @@ function App() {
                 }}
               ></textarea>
             </div>
-            <div class="col-2">
+            <div className="col-2">
               <input
-                class="form-control"
+                className="form-control"
                 type="number"
                 placeholder="cantidad"
                 value={qty}
@@ -94,10 +94,10 @@ function App() {
                 }}
               ></input>
             </div>
-            <div class="col-2">
+            <div className="col-2">
               <button
                 type="button"
-                class="btn btn-secondary btn-md"
+                className="btn btn-secondary btn-md"
                 onClick={() => {
                   dispatch(
                     addProducts({
@@ -106,11 +106,11 @@ function App() {
                       qty: qty,
                       description: description,
                     })
-                    );
-                    setQty(()=>"");
-                    setCategory(()=>"");
-                    setDesciption(()=>"");
-                    setProductName(()=>"");
+                  );
+                  setQty(() => "");
+                  setCategory(() => "");
+                  setDesciption(() => "");
+                  setProductName(() => "");
                 }}
               >
                 agregar
@@ -119,7 +119,7 @@ function App() {
           </div>
           <hr />
 
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th scope="col">#id</th>
@@ -130,10 +130,10 @@ function App() {
               </tr>
             </thead>
             <tbody>
-              {products.map((item) => {
+              {products.map((item, key) => {
                 return (
                   <>
-                    <tr key={item.id}>
+                    <tr key={key}>
                       <th scope="row">{item.id}</th>
                       <td>{item.productname}</td>
                       <td>{item.category}</td>
@@ -142,7 +142,7 @@ function App() {
                       <td>
                         <button
                           type="button"
-                          class="btn btn-danger btn-sm"
+                          className="btn btn-danger btn-sm"
                           onClick={() => {
                             dispatch(deleteProducts(item.id));
                           }}
@@ -153,7 +153,7 @@ function App() {
                       <td>
                         <div class="dropdown">
                           <button
-                            class="btn btn-secondary btn-sm dropdown-toggle"
+                            className="btn btn-secondary btn-sm dropdown-toggle"
                             type="button"
                             id="dropdownMenuButton1"
                             data-bs-toggle="dropdown"
@@ -162,74 +162,11 @@ function App() {
                             editar
                           </button>
                           <ul
-                            class="dropdown-menu "
+                            className="dropdown-menu "
                             aria-labelledby="dropdownMenuButton1"
                           >
-                            <li>
-                              <label class="form-label mx-3 mt-3">
-                                producto
-                              </label>
-                              <input
-                                type="text"
-                                defaultValue={item.productname}
-                                required
-                                class="form-control my-1 dropdownInput"
-                                placeholder="producto"
-                                onChange={(e) => {
-                                  setNewProductName(e.target.value);
-                                }}
-                              ></input>
-                            </li>
-                            <li>
-                              <label class="form-label mx-3 mt-3">
-                                categoria
-                              </label>
-                              <input
-                                type="text"
-                                defaultValue={item.category}
-                                required
-                                class="form-control my-1 dropdownInput"
-                                placeholder="categoria"
-                                onChange={(e) => {
-                                  setNewCategory(e.target.value);
-                                }}
-                              ></input>
-                            </li>
-                            <li>
-                              <label class="form-label mx-3 mt-3">
-                                descripcion
-                              </label>
-                              <input
-                                defaultValue={item.description}
-                                required
-                                type="text"
-                                class="form-control my-1 dropdownInput"
-                                placeholder="decripcion"
-                                onChange={(e) => {
-                                  setNewDescription(e.target.value);
-                                }}
-                              ></input>
-                            </li>
-                            <li>
-                              <label class="form-label mx-3 mt-3">
-                                cantidad
-                              </label>
-                              <input
-                                defaultValue={item.qty}
-                                required
-                                type="text"
-                                class="form-control my-1 dropdownInput"
-                                placeholder="cantidad"
-                                onChange={(e) => {
-                                  setNewQty(e.target.value);
-                                }}
-                              ></input>
-                            </li>
-                            <li>
-                              <button
-                                type="button"
-                                class="btn btn-secondary btn-sm m-2 dropdownInput"
-                                onClick={() => {
+                            {/*  Form on dropdown "editar" */}
+                            <form onSubmit={() => {
                                   dispatch(
                                     updateProducts({
                                       id: item.id,
@@ -239,11 +176,73 @@ function App() {
                                       qty: newQty,
                                     })
                                   );
-                                }}
+                                }}>
+                              <p className="m-3 text-danger">completar todos los campos</p>
+                              <div className="mb-1">
+                                <label class="form-label mx-3 mt-3">
+                                  producto*
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control my-1 dropdownInput"
+                                  placeholder="producto"
+                                  onChange={(e) => {
+                                    setNewProductName(e.target.value);
+                                  }}
+                                  required
+                                ></input>
+                              </div>
+                              <div className="mb-1">
+                                <label class="form-label mx-3 mt-3">
+                                  categoria*
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control my-1 dropdownInput"
+                                  placeholder="categoria"
+                                  onChange={(e) => {
+                                    setNewCategory(e.target.value);
+                                  }}
+                                  required
+                                ></input>
+                              </div>
+                              <div className="mb-1">
+                                <label class="form-label mx-3 mt-3">
+                                  cantidad*
+                                </label>
+                                <input
+                                  type="number"
+                                  className="form-control my-1 dropdownInput"
+                                  placeholder="cantidad"
+                                  onChange={(e) => {
+                                    setNewQty(e.target.value);
+                                  }}
+                                  required
+                                ></input>
+                              </div>
+                              <div className="mb-1">
+                                <label className="form-label mx-3 mt-3">
+                                  descripcion*
+                                </label>
+                                <input
+                                  type="text"
+                                  className="form-control my-1 dropdownInput"
+                                  placeholder="decripcion"
+                                  onChange={(e) => {
+                                    setNewDescription(e.target.value);
+                                  }}
+                                  required
+                                ></input>
+                              </div>
+                              <button
+                                type="submit"
+                                value="submit"
+                                className="btn btn-secondary btn-sm m-3 dropdownInput"
+                                
                               >
-                                update product
+                                guardar cambios
                               </button>
-                            </li>
+                            </form>
                           </ul>
                         </div>
                       </td>
