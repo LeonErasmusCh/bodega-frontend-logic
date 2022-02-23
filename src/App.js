@@ -36,7 +36,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch]);
+  }, [dispatch, products]);
 
 
 
